@@ -1,0 +1,38 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+// Colors
+$blick: rgb(226, 0, 0);
+$gray: #f7f7f7;
+$gray-hr: #c9c9c9;
+$gray-hr-light: #dedede;
+
+// Breakpoints
+$mobile: 400px;
+
+
+:root 
+{
+    font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+
+
+.App
+{
+    background: red !important;
+    max-width: 632px;
+    border-top: 1px solid $gray-hr;
+    border-bottom: 1px solid $gray-hr;
+
+   
+
+    @media (max-width: $mobile) {
+        max-width: 100%;
+    }
+}
