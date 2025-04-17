@@ -1,15 +1,10 @@
+@import './styles/_variables';
+@import './styles/_fonts';
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-// Colors
-$blick: rgb(226, 0, 0);
-$gray: #f7f7f7;
-$gray-hr: #c9c9c9;
-$gray-hr-light: #dedede;
-
-// Breakpoints
-$mobile: 400px;
 
 
 :root 
@@ -23,16 +18,15 @@ $mobile: 400px;
 
 
 
-.App
+.App 
 {
-    background: red !important;
     max-width: 632px;
     border-top: 1px solid $gray-hr;
     border-bottom: 1px solid $gray-hr;
-
-   
 
     @media (max-width: $mobile) {
         max-width: 100%;
     }
 }
+
+
