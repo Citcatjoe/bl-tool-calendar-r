@@ -1,28 +1,9 @@
 import React from 'react';
 import s from './Calendar.module.scss'; // Import des styles spécifiques au composant via CSS Modules
 import { doc, updateDoc, increment } from 'firebase/firestore';
-import { db } from '../../firebase'; // Assurez-vous que `db` est correctement exporté depuis votre fichier firebase.js
+import { db } from '../../services/firebase'; // Assurez-vous que `db` est correctement exporté depuis votre fichier firebase.js
 import LoadingOverlay from '../LoadingOverlay/LoadingOverlay'; // Import du composant LoadingOverlay
-
-function dataLayerPushSeeAllClick(docId) {
-  const iframeId = "storytelling_CAL_" + docId;
-  //alert('iframeid is ' + iframeId);
-  window.blickDataLayer.push({
-    event: "iframe_click",
-    iframe_name: iframeId,
-    iframe_id: "iframe_see_all_clicked"
-  });
-}
-
-function dataLayerPushLinkGlobalClick(docId) {
-  const iframeId = "storytelling_CAL_" + docId;
-  //alert(iframeId);
-  window.blickDataLayer.push({
-    event: "iframe_click",
-    iframe_name: iframeId, 
-    iframe_id: "iframe_link_global_clicked"
-  });
-}
+import { dataLayerPushSeeAllClick, dataLayerPushLinkGlobalClick } from '../../services/analytics';
 
 async function incrementClickCounter(docId) {
   try {
@@ -31,7 +12,7 @@ async function incrementClickCounter(docId) {
       linkGlobalClickCounter: increment(1), // Incrémente la valeur de 1
     });
     //console.log('Compteur de clics incrémenté dans Firestore');
-    dataLayerPushLinkGlobalClick(docId); // Appel de la fonction pour envoyer l'événement au dataLayer
+    //dataLayerPushLinkGlobalClick(docId); // Appel de la fonction pour envoyer l'événement au dataLayer
   } catch (error) {
     console.error('Erreur lors de l’incrémentation du compteur :', error);
   }
@@ -81,10 +62,7 @@ function Calendar({ calendar, docId, showAll, onSeeAllClick }) {
         <span
           id="see-all"
           className="font-i text-sm block w-16 -mt-5 mb-3 opacity-70 cursor-pointer hover:underline float-left"
-          onClick={() => {
-            onSeeAllClick(); // Appel de la fonction existante
-            dataLayerPushSeeAllClick(docId); // Appel de la nouvelle fonction
-          }}
+          onClick={onSeeAllClick} // Appel uniquement de la fonction passée en prop
         >
           Tout voir
         </span>
@@ -98,7 +76,8 @@ function Calendar({ calendar, docId, showAll, onSeeAllClick }) {
             className="underline text-blick font-semibold"
             target={calendar.linkGlobalNewTab ? '_blank' : '_parent'} // Ouvrir dans un nouvel onglet si `linkGlobalNewTab` est vrai
             onClick={() => {
-              incrementClickCounter(docId);
+              incrementClickCounter(docId); // Appel de la fonction Firebase
+              dataLayerPushLinkGlobalClick(docId); // Appel de la fonction analytique (push meme sans counter)
             }}
           >
             {calendar.linkGlobalTxt} {/* Texte du lien global */}
