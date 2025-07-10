@@ -5,14 +5,14 @@
 export function dataLayerPushSeeAllClick(docId) {
   const iframeId = `storytelling_CAL_${docId}`;
   if (window.blickDataLayer) {
-    // window.blickDataLayer.push({
-    //   event: 'iframe_click',
-    //   iframe_name: iframeId,
-    //   iframe_id: 'iframe_see_all_clicked',
-    // });
-    console.log(`Event "see all click" pushed for docId: ${docId}`);
+    window.blickDataLayer.push({
+      event: 'iframe_click',
+      iframe_name: iframeId,
+      iframe_id: 'iframe_see_all_clicked',
+    });
+    //console.log(`Event "see all click" pushed for docId: ${docId}`);
   } else {
-    console.error('blickDataLayer is not defined');
+    //console.error('blickDataLayer is not defined');
   }
 }
 
@@ -23,14 +23,14 @@ export function dataLayerPushSeeAllClick(docId) {
 export function dataLayerPushLinkGlobalClick(docId) {
   const iframeId = `storytelling_CAL_${docId}`;
   if (window.blickDataLayer) {
-    // window.blickDataLayer.push({
-    //   event: 'iframe_click',
-    //   iframe_name: iframeId,
-    //   iframe_id: 'iframe_link_global_clicked',
-    // });
-    console.log(`Event "link global click" pushed for docId: ${docId}`);
+    window.blickDataLayer.push({
+      event: 'iframe_click',
+      iframe_name: iframeId,
+      iframe_id: 'iframe_link_global_clicked',
+    });
+    //console.log(`Event "link global click" pushed for docId: ${docId}`);
   } else {
-    console.error('blickDataLayer is not defined');
+    //console.error('blickDataLayer is not defined');
   }
 }
 
@@ -41,13 +41,13 @@ export function dataLayerPushLinkGlobalClick(docId) {
 export function dataLayerPushView(calendarDoc) {
   const iframeId = `storytelling_CAL_${calendarDoc}`;
   if (window.blickDataLayer) {
-    // window.blickDataLayer.push({
-    //   event: 'iframe_click',
-    //   iframe_name: iframeId,
-    //   iframe_id: 'iframe_see_all_clicked',
-    // });
-    console.log(`Event "view" pushed for calendarDoc: ${calendarDoc}`);
+    window.blickDataLayer.push({
+      event: 'iframe_click',
+      iframe_name: iframeId,
+      iframe_id: 'iframe_see_all_clicked',
+    });
+    //console.log(`Event "view" pushed for calendarDoc: ${calendarDoc}`);
   } else {
-    console.error('blickDataLayer is not defined');
+    //console.error('blickDataLayer is not defined');
   }
 }

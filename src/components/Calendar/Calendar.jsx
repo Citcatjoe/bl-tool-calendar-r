@@ -58,11 +58,11 @@ function Calendar({ calendar, docId, showAll, onSeeAllClick }) {
       </ul>
 
       {/* Bouton "Tout voir" pour afficher tous les éléments si `showAll` est faux */}
-      {!showAll && (
+      {!showAll && calendar.dates.length > calendar.nbElemsToShow && (
         <span
           id="see-all"
           className="font-i text-sm block w-16 -mt-5 mb-3 opacity-70 cursor-pointer hover:underline float-left"
-          onClick={onSeeAllClick} // Appel uniquement de la fonction passée en prop
+          onClick={onSeeAllClick}
         >
           Tout voir
         </span>
