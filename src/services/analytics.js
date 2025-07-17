@@ -42,9 +42,9 @@ export function dataLayerPushView(calendarDoc) {
   const iframeId = `storytelling_CAL_${calendarDoc}`;
   if (window.blickDataLayer) {
     window.blickDataLayer.push({
-      event: 'iframe_click',
+      event: 'iframe_impression',
       iframe_name: iframeId,
-      iframe_id: 'iframe_see_all_clicked',
+      iframe_id: 'iframe_impression',
     });
     //console.log(`Event "view" pushed for calendarDoc: ${calendarDoc}`);
   } else {

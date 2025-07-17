@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import s from './Calendar.module.scss'; // Import des styles spécifiques au composant via CSS Modules
 import { doc, updateDoc, increment } from 'firebase/firestore';
 import { db } from '../../services/firebase'; // Assurez-vous que `db` est correctement exporté depuis votre fichier firebase.js
@@ -7,9 +7,9 @@ import { dataLayerPushSeeAllClick, dataLayerPushLinkGlobalClick } from '../../se
 
 async function incrementClickCounter(docId) {
   try {
-    const calendarRef = doc(db, 'questions', docId); // Remplacez 'questions' par le nom de votre collection
+    const calendarRef = doc(db, 'embeds', docId); // Remplacez 'questions' par le nom de votre collection
     await updateDoc(calendarRef, {
-      linkGlobalClickCounter: increment(1), // Incrémente la valeur de 1
+      counterLinkGlobalClicks: increment(1), // Incrémente la valeur de 1
     });
     //console.log('Compteur de clics incrémenté dans Firestore');
     //dataLayerPushLinkGlobalClick(docId); // Appel de la fonction pour envoyer l'événement au dataLayer
@@ -18,11 +18,30 @@ async function incrementClickCounter(docId) {
   }
 }
 
+async function incrementViewCounter(docId) {
+  try {
+    const calendarRef = doc(db, 'embeds', docId);
+    await updateDoc(calendarRef, {
+      counterViews: increment(1), // Incrémente le compteur de vues de 1
+    });
+    //console.log('Compteur de vues incrémenté dans Firestore');
+  } catch (error) {
+    console.error('Erreur lors de l\'incrémentation du compteur de vues :', error);
+  }
+}
+
 function Calendar({ calendar, docId, showAll, onSeeAllClick }) {
   // Vérification si les données du calendrier sont disponibles
   if (!calendar || !calendar.dates) {
     return <LoadingOverlay />; // Utilisation du composant LoadingOverlay
   }
+
+  // useEffect pour incrémenter le compteur de vues quand le composant est affiché
+  useEffect(() => {
+    if (docId) {
+      incrementViewCounter(docId);
+    }
+  }, [docId]); // Se déclenche quand docId change ou au premier rendu
 
   // Tri des dates du calendrier par ordre croissant
   const sortedDates = [...calendar.dates].sort((a, b) => a.date.localeCompare(b.date));
@@ -51,7 +70,7 @@ function Calendar({ calendar, docId, showAll, onSeeAllClick }) {
                 <span className={`${s.eventDateMonth} absolute left-1/2 -translate-x-1/2 text-xs`}>{months[parseInt(month) - 1]}</span>
               </div>
               {/* Affichage de l'événement */}
-              <span className="grow font-blickb text-sm leading-tight">{item.event}</span>
+              <span className="grow font-blickb text-sm leading-tight">{item.text}</span>
             </li>
           );
         })}

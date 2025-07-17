@@ -4,7 +4,7 @@ import { doc, getDoc } from 'firebase/firestore';
 
 export async function fetchCalendarData(docRef) {
   try {
-    const calendarRef = doc(db, 'questions', docRef); // Remplacez 'questions' par le nom de votre collection
+    const calendarRef = doc(db, 'embeds', docRef); // Remplacez 'questions' par le nom de votre collection
     const docSnap = await getDoc(calendarRef);
 
     if (docSnap.exists()) {
